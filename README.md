@@ -6,6 +6,8 @@ UK_AIRPORTS_OPS ✈️
 
 
 OVERVIEW 
+
+
 This project provides a real-time operational overview for 44 UK airports, combining airport geolocation data with live weather conditions. The goal is to support airport operators and planners with accurate, timely environmental insights that influence flight schedules, ground operations, and the overall passenger experience.
 
 By integrating real-time weather data from the OpenWeatherMap API and detailed metadata for each airport — including latitude/longitude, ICAO/IATA codes, city, and country — this system enables early detection of weather-related risks.
@@ -31,17 +33,23 @@ The insights are presented through an interactive PowerBI dashboard to show real
 
 
 Problem Statement
+
+
 The airport requires an interactive dashboard that provides real-time insights into flight performance and the impact of weather on current and future operations.
 An automated data pipeline is essential to ensure continuous updates on flight schedules and weather conditions.
 
 
 Objectives
+
+
 Gather and analyze daily airport operations to assess overall performance and identify any emerging issues.
 Monitor upcoming weather conditions to anticipate potential disruptions to airport operations.
 Develop a user-friendly dashboard that provides quick and easy access to essential flight and weather information.
 
 
 Tech Stack
+
+
 Python 🐍 (Data fetching, processing, and transformation)
 
 Apache Spark (PySpark) ⚡ (Data handling and transformations)
@@ -52,6 +60,8 @@ Power BI 📈 – Interactive dashboards and real-time visualizations for weathe
 
 
 Data Sources
+
+
 1. AviationStack API 🛬
 About: This API offers a simple, free way of accessing global flight tracking data in real-time. It provides an extensive set of aviation data, including real-time flight status, flight schedules, airline routes, airports, and aircrafts. It updates data every 30-60 seconds. This included information from 250+ countries and 13000+ airlines.
 Need: This API provided the base for the project and the rest of the project is built on top of this.
@@ -80,6 +90,8 @@ Data includes: ICAO code, IATA code, airport name, country, city, latitude, long
 
 
 Architecture and Methodology 📝
+
+
 Medallion Architecture was implemented to enhance data quality, organization, and reliability throughout the data pipeline.
 
 In the bronze layer, raw data was ingested in its original form, serving as the foundational data source. Before transitioning to the silver layer, rigorous data processing techniques were applied, including data cleansing, transformation, deduplication, and filtering, to ensure consistency and accuracy. Finally, before promoting data to the gold layer, comprehensive unit tests were conducted to validate data integrity, preventing bad or incomplete data from reaching production-level tables.
@@ -89,11 +101,13 @@ This structured approach ensures that only high-quality, reliable data is used f
 Data Pipeline Architecture
 
 
+
 ![image](https://github.com/user-attachments/assets/91031a04-f589-45b5-9a8e-a285ab690c1d)
 
 
 
 Data Model Design ⚙️
+
 
 ![image](https://github.com/user-attachments/assets/3e97f312-d2c7-46a6-932b-fb6b65e6b699)
 
@@ -102,6 +116,8 @@ In this project, data was intentionally not normalized because the primary use c
 
 
 Streaming Processing, Ingestion, & Storage 💾
+
+
 Implemented Databricks Delta Live Tables to stream real-time departure and arrival data from the AviationStack API.
 
 Configured a Databricks workflow to run continuously, integrating a Delta Live pipeline for seamless data ingestion and processing.
@@ -111,6 +127,8 @@ The Global Airport Database lacked documentation on data refresh intervals, so n
 
 
 Data Quality 🔢
+
+
 To maintain the integrity and reliability of the gold-level tables, unit tests were implemented to validate the data. These tests ensured:
 
 No null values were present in critical fields.
@@ -119,6 +137,8 @@ Duplicate records were identified and removed.
 
 
 Orchestration
+
+
 ![uk_dept_+_arrival_job_run_every_min](https://github.com/user-attachments/assets/7a19a245-16c8-4224-b7b1-391576c9a7dc)
 
 ![uk_airport_weather_job_run](https://github.com/user-attachments/assets/cb3ad9b1-6d60-44a3-b63e-5eba5a6da818)
@@ -129,6 +149,7 @@ OpenWeatherMap API workflow was scheduled for 30 minutes after the hour
 
 
 Visualizations 📊
+
 
 Arrivals page:
 
@@ -148,6 +169,8 @@ Arrival + Depart Delay
 
 
 Future Enhancements
+
+
 Extend data coverage to include all airports for a more comprehensive analysis.
 Enrich the dataset with additional insights relevant to airport operators, such as flight safety information and historical flight data.
 Incorporate UV weather data to enhance weather-related decision-making.
